@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/include :: head('Accueil')"></head>
+<body>
+<header th:include="fragments/include :: header "></header>
+<main>
+    <section>
+        <div class="factures container">
+            <div th:each="facture : ${factures}" class="facture-card">
+                <h3>Facture: <span th:text="${facture.libelle}"></span></h3>
+                <p>Client: <span th:text="${facture.client.raisonSociale}"></span></p>
+                <p>Emeteur: <span th:text="${facture.emeteur.raisonSociale}"></span></p>
+                <p>Status:
+                    <span th:if="${facture.datePayment != null}" class="status">Réglé</span>
+                    <span th:if="${facture.datePayment == null}" class="status not-paid">A régler</span>
+                </p>
+                <p th:include="fragments/buttons :: linkFacture"></p>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:include="fragments/include :: footer "></footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Detail Facture</title>
+  <style>
+    h1 {
+      color:  #005f0f;
+    }
+
+    th {
+    color: #005f0f;
+    font-weight: 800;
+    text-align: center;
+    }
+
+    td{
+    border: solid black 2px;
+    padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+<img src="/images/thymleaf.png" height="360" width="360"/>
+<h1 th:text="'Facture ' + ${facture.id}"></h1>
+
+<div class="container emeteur">
+  <h2>Émetteur</h2>
+  <p><strong>Raison Sociale:</strong> <span th:text="${facture.emeteur.raisonSociale}"></span></p>
+  <p><strong>SIRET:</strong> <span th:text="${facture.emeteur.siret}"></span></p>
+  <p><strong>Adresse:</strong> <span th:text="${facture.emeteur.numeroRue}"></span>,
+    <span th:text="${facture.emeteur.rue}"></span></p>
+  <p><strong>Code Postal - Ville:</strong> <span th:text="${facture.emeteur.codePostal}"></span>
+    - <span th:text="${facture.emeteur.ville}"></span></p>
+</div>
+
+<div class="container client">
+  <h2>Destinataire</h2>
+  <p><strong>Raison Sociale:</strong> <span th:text="${facture.client.raisonSociale}"></span></p>
+  <p><strong>SIRET:</strong> <span th:text="${facture.client.siret}"></span></p>
+  <p><strong>Adresse:</strong> <span th:text="${facture.client.numeroRue}"></span>,
+    <span th:text="${facture.client.rue}"></span></p>
+  <p><strong>Code Postal - Ville:</strong> <span th:text="${facture.client.codePostal}"></span>
+    - <span th:text="${facture.client.ville}"></span></p>
+</div>
+
+<div>
+
+  <table th:unless="${facture.lignes == null or facture.lignes.isEmpty()}">
+    <thead>
+    <tr>
+      <th>Quantité</th>
+      <th>Description</th>
+      <th>Prix Unitaire HT</th>
+      <th>TVA (%)</th>
+      <th>Total HT</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ligne : ${facture.lignes}">
+      <td th:text="${ligne.quantity}"></td>
+      <td th:text="${ligne.designation}"></td>
+      <td th:text="${#numbers.formatDecimal(ligne.prixHt, 2,2, 'COMMA')}"></td>
+      <td th:text="${ligne.tva.libelle}"></td>
+      <td th:text="${#numbers.formatDecimal(ligne.quantity.multiply(ligne.prixHt), 2,2, 'COMMA')}" class="right-align"></td>
+    </tr>
+    </tbody>
+  </table>
+  <p th:unless="${facture.lignes != null and !facture.lignes.isEmpty()}">Pas de ligne dans la facture</p>
+</div>
+
+
+</body>
+</html>

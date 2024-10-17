@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<CTA class ="cta" th:fragment="ctaButton(content, url)">
+  <a  th:href="${url}" class="btn cta">
+    <span th:text="${content}"></span>
+  </a>
+</CTA>
+
+<linkFacture>
+  <a th:href="@{/detail/{facture}(facture=${facture.id})}" class="linkfacture">
+    <span>Voir la facture !</span>
+  </a>
+</linkFacture>
+</html>

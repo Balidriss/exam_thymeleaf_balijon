@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/include :: head('Lignes : ' + ${facture.libelle})"></head>
+<body>
+<header th:include="fragments/include :: header "></header>
+<main>
+  <section>
+    <div class="cta-block">
+      <div th:include="fragments/buttons :: CTA('Retour', @{/detail/{facture}(facture=${facture.id})})"></div>
+      <div th:include="fragments/buttons :: CTA('Ajouter une ligne', @{/ligne/{facture}/ajout(facture=${facture.id})})"></div>
+    </div>
+    <article th:include="fragments/include :: lignesFacture "></article>
+  </section>
+</main>
+<footer th:include="fragments/include :: footer "></footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/include :: head('detail : ' + ${facture.libelle})"></head>
+<body>
+<header th:include="fragments/include :: header "></header>
+<main>
+  <section>
+    <h1 th:text="${facture.libelle}"></h1>
+    <div class="cta-block">
+      <div th:include="fragments/buttons :: CTA('Voir les lignes', @{/ligne/{facture}(facture=${facture.id})})"></div>
+      <div th:include="fragments/buttons :: CTA('Exporter en PDF', @{/pdf/{facture}(facture=${facture.id})})"></div>
+    </div>
+    <article th:include="fragments/include :: Emitter"> </article>
+    <article th:include="fragments/include :: Receiver">'</article>
+    <article th:include="fragments/include :: lignesFacture"
+             th:unless="${facture.lignes == null or facture.lignes.isEmpty()}"></article>
+    <p th:unless="${facture.lignes != null and !facture.lignes.isEmpty()}">Pas de ligne dans la facture</p>
+    <p th:text="'Réglement par virement bancaire au plus tard le ' +
+              ${#dates.format(facture.dateFacture.time, 'dd/MM/yyyy')} +
+              ' + 90 jours'"></p>
+
+    <p> Tout retard de paiement d'une quelconque facture fait courir, immediatement et de plein droit, des interêts de retard calcultés au taux directeur de la BCE majoré de 7 points jusqu'au paiement effectif et intégral.</p>
+  </section>
+</main>
+<footer th:include="fragments/include :: footer "></footer>
+</body>
+</html>

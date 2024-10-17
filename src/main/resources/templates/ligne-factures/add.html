@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/include :: head('Ajouter Lignes : ' + ${facture.libelle})"></head>
+<body>
+<header th:include="fragments/include :: header "></header>
+<main>
+  <section>
+    <div class="cta-block">
+      <div th:include="fragments/buttons :: CTA('Retour', @{/detail/{facture}(facture=${facture.id})})"></div>
+
+    </div>
+    <form th:action="@{/ligne/{facture}/ajout(facture=${facture.id})}" th:object="${ligneFacture}" method="post">
+
+      <div class="form-block">
+      <label for="prixHt">Prix HT</label>
+      <input id="prixHt" type="number" th:field="*{prixHt}" />
+      <div th:if="${#fields.hasErrors('prixHt')}" th:errors="*{prixHt}" class="textFail"></div>
+      </div>
+
+      <div class="form-block">
+      <label for="quantity">Quantity</label>
+      <input id="quantity" type="number" th:field="*{quantity}" />
+      <div th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="textFail"></div>
+      </div>
+
+      <div class="form-block">
+      <label for="tva">TVA</label>
+      <select id="tva" th:field="*{tva}">
+        <option th:each="tva : ${tvas}" th:value="${tva.id}" th:text="${tva.libelle}"></option>
+      </select>
+      <div th:if="${#fields.hasErrors('tva')}" th:errors="*{tva}" class="textFail"></div>
+      </div>
+
+      <div class="form-block">
+      <label for="designation">Designation</label>
+      <input id="designation" type="text" th:field="*{designation}" />
+        <div th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}" class="textFail"></div>
+      </div>
+
+      <button type="submit" class="cta">Submit</button>
+    </form>
+  </section>
+</main>
+<footer th:include="fragments/include :: footer "></footer>
+</body>
+</html>

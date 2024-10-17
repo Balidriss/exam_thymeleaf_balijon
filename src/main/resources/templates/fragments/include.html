@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="titleHead(title)">
+    <meta charset="UTF-8"><meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1"><meta>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <title th:text="${title}"></title>
+</head>
+<header>
+    <nav><div class="logo"><img th:src="@{/images/thymleaf.png}" alt="logo for Facture, but it's thymleaf" class="logo"></div>
+        <menu>
+            <li><a th:href="@{/}">Factures</a></li>
+            <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Ajout Facture</a></li>
+            <li><a href="http://ibsoft.fr" >A propos</a></li>
+        </menu>
+    </nav>
+</header>
+
+<lignesFacture class="container table">
+    <table>
+        <thead>
+        <tr>
+            <th>Quantité</th>
+            <th>Description</th>
+            <th>Prix Unitaire HT</th>
+            <th>TVA (%)</th>
+            <th>Total HT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="ligne, state : ${facture.lignes}">
+            <tr th:class="${state.even ? '' : 'bg-darker'}">
+            <td th:text="${ligne.quantity}"></td>
+            <td th:text="${ligne.designation}"></td>
+            <td th:text="${#numbers.formatDecimal(ligne.prixHt, 2,2, 'COMMA')}"></td>
+            <td th:text="${ligne.tva.libelle}"></td>
+            <td th:text="${#numbers.formatDecimal(ligne.quantity.multiply(ligne.prixHt), 2,2, 'COMMA')}" class="right-align"></td>
+        </tr>
+        </th:block>
+        </tbody>
+    </table>
+</lignesFacture>
+
+<Emitter class="container emeteur">
+    <h2>Émetteur</h2>
+    <p><strong>Raison Sociale:</strong> <span th:text="${facture.emeteur.raisonSociale}"></span></p>
+    <p><strong>SIRET:</strong> <span th:text="${facture.emeteur.siret}"></span></p>
+    <p><strong>Adresse:</strong> <span th:text="${facture.emeteur.numeroRue}"></span>,
+        <span th:text="${facture.emeteur.rue}"></span></p>
+    <p><strong>Code Postal - Ville:</strong> <span th:text="${facture.emeteur.codePostal}"></span>
+        - <span th:text="${facture.emeteur.ville}"></span></p>
+</Emitter>
+<Receiver class="container client">
+
+    <h2>Destinataire</h2>
+    <p><strong>Raison Sociale:</strong> <span th:text="${facture.client.raisonSociale}"></span></p>
+    <p><strong>SIRET:</strong> <span th:text="${facture.client.siret}"></span></p>
+    <p><strong>Adresse:</strong> <span th:text="${facture.client.numeroRue}"></span>,
+        <span th:text="${facture.client.rue}"></span></p>
+    <p><strong>Code Postal - Ville:</strong> <span th:text="${facture.client.codePostal}"></span>
+        - <span th:text="${facture.client.ville}"></span></p>
+    </div>
+</Receiver>
+
+
+<footer>
+    <p>Copyright : Exam Thymeleaf Aurélien</p>
+</footer>
+</html>
